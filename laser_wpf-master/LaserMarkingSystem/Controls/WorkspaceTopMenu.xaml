@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="InIWorkspace.Controls.WorkspaceTopMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d">
+    <Grid>
+        <!-- Navbar -->
+        <Menu VerticalAlignment="Top" Background="LightGray">
+            <!-- File Menu -->
+            <MenuItem Header="File">
+                <MenuItem Header="New">
+                    <MenuItem.Icon>
+                        <Image Source="./img/workspace/new-file.svg" Width="16" Height="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Open" Click="MenuItem_Open_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="./img/workspace/sub-open.svg" Width="16" Height="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Save">
+                    <MenuItem.Icon>
+                        <Image Source="./img/workspace/save.svg" Width="16" Height="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Save as">
+                    <MenuItem.Icon>
+                        <Image Source="./img/workspace/saveAs.svg" Width="16" Height="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Close">
+                    <MenuItem.Icon>
+                        <Image Source="./img/workspace/close-sub.svg" Width="16" Height="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+
+            <!-- Edit Menu -->
+            <MenuItem Header="Edit">
+                <MenuItem Header="Get Ent Info" />
+                <MenuItem Header="Change Text" />
+                <MenuItem Header="Change Size" />
+                <MenuItem Header="Move All" />
+                <MenuItem Header="Move Ent" />
+                <MenuItem Header="Hatch" />
+                <MenuItem Header="Draw" />
+                <MenuItem Header="Undo" />
+                <MenuItem Header="Redo" />
+            </MenuItem>
+
+            <!-- Tools Menu -->
+            <MenuItem Header="Tools">
+                <MenuItem Header="Zoom" />
+                <MenuItem Header="Zoom In" />
+                <MenuItem Header="Zoom Out" />
+                <MenuItem Header="Calculate Marking Time" />
+                <MenuItem Header="IO Status" />
+                <MenuItem Header="Log View" />
+            </MenuItem>
+
+            <!-- Pen Menu -->
+            <MenuItem Header="Pen">
+                <MenuItem Header="Pen Settings" />
+            </MenuItem>
+
+            <!-- Settings Menu -->
+            <MenuItem Header="Settings">
+                <MenuItem Header="Software" />
+                <MenuItem Header="Hardware" />
+                <MenuItem Header="Reset Current Count" />
+                <MenuItem Header="Reset Total Count" />
+                <MenuItem Header="Login" />
+            </MenuItem>
+
+            <!-- Markings Menu -->
+            <MenuItem Header="Markings">
+                <MenuItem Header="Enter Marking Mode" />
+                <MenuItem Header="Total Count" />
+                <MenuItem Header="Marking Time" />
+                <MenuItem Header="Mark" />
+                <MenuItem Header="Stop Red Beam" />
+                <MenuItem Header="Stop Marking" />
+            </MenuItem>
+
+            <!-- Hatch Menu -->
+            <MenuItem Header="Hatch">
+                <MenuItem Header="Hatch Settings" />
+            </MenuItem>
+        </Menu>
+
+        <!-- Right-Aligned Buttons -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,30,10,0">
+            <Button Background="Red" Foreground="White" FontWeight="Bold" Margin="5">
+                <TextBlock Text="LASER OFF" />
+            </Button>
+            <Button BorderBrush="Gray" BorderThickness="1" FontWeight="Bold" Margin="5">
+                <TextBlock Text="Start Marking" />
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

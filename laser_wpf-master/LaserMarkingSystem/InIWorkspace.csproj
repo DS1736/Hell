@@ -1,0 +1,338 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Images\ActiveButtonImage.png" />
+    <None Remove="Resources\Images\AdminUserLogin.png" />
+    <None Remove="Resources\Images\ApplicationLogo.png" />
+    <None Remove="Resources\Images\btnDeleteRecord.png" />
+    <None Remove="Resources\Images\btnEditRecord.png" />
+    <None Remove="Resources\Images\DeleteIcon.png" />
+    <None Remove="Resources\Images\EditDelete.png" />
+    <None Remove="Resources\Images\EditIcon.png" />
+    <None Remove="Resources\Images\IFNI-Header-Logo.png" />
+    <None Remove="Resources\Images\LoginPageBackGround.png" />
+    <None Remove="Resources\Images\NormalUserLogin.png" />
+    <None Remove="Resources\Images\PasswordTextBox.png" />
+    <None Remove="Resources\Images\PlusButtonActivationCode.png" />
+    <None Remove="Resources\Images\Right.png" />
+    <None Remove="Resources\Images\TopClockIcon.png" />
+    <None Remove="Resources\Images\UserTextBox.png" />
+    <None Remove="Resources\Images\Wrong.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Resources\Images\.DS_Store" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="8.2.0" />
+    <PackageReference Include="Caliburn.Micro" Version="4.0.230" />
+    <PackageReference Include="ControlzEx" Version="6.0.0" />
+    <PackageReference Include="DotNetProjects.SVGImage" Version="5.2.3" />
+    <PackageReference Include="Fluent.Ribbon" Version="10.1.0" />
+    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
+    <PackageReference Include="MaterialDesignColors" Version="5.2.1" />
+    <PackageReference Include="MaterialDesignThemes" Version="5.2.1" />
+    <PackageReference Include="MaterialDesignThemes.Wpf" Version="1.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
+    <PackageReference Include="SkiaSharp" Version="3.116.1" />
+    <PackageReference Include="SkiaSharp.Views.WPF" Version="3.116.1" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Draw2D.Core\Infini.Draw2D.Core.csproj" />
+    <ProjectReference Include="..\Draw2DControlLibrary\Infini.Draw2DControlLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\ActiveButtonImage.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\AdminUserLogin.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ApplicationLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\btnDeleteRecord.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\btnEditRecord.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\DeleteIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\EditDelete.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\EditIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\IFNI-Header-Logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\LoginPageBackGround.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\NormalUserLogin.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\PasswordTextBox.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\PlusButtonActivationCode.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\TopClockIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\UserTextBox.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Wrong.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="EzCad3DLL\Atlas.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CH365DLL64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CalibrationPara.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.25W.DLC2.110x110.150ZRA.20230831.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.25W.DLC2.110x110.150ZRA.20230831.cor.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.25W.DLC2.175x175.250Z.20230831.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.25W.DLC2.175x175.250Z.20230831.cor.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.25W.DLC2.210x210.300Z.20230831.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.25W.DLC2.210x210.300Z.20230831.cor.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.25W.DLC2.300x300.430Z.20230831.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.25W.DLC2.300x300.430Z.20230831.cor.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.25W.DLC2.50x50.75Z.20230831.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.25W.DLC2.50x50.75Z.20230831.cor.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.25W.DLC2.70x70.100Z.20230831.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.25W.DLC2.70x70.100Z.20230831.cor.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.30W.DLC2.110x110.150ZRA.20230831.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.30W.DLC2.110x110.150ZRA.20230831.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.30W.DLC2.175x175.250Z.20230831.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.30W.DLC2.175x175.250Z.20230831.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.30W.DLC2.210x210.300Z.20230831.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.30W.DLC2.210x210.300Z.20230831.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.30W.DLC2.300x300.430Z.20230831.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.30W.DLC2.300x300.430Z.20230831.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.30W.DLC2.50x50.75Z.20230831.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.30W.DLC2.50x50.75Z.20230831.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.30W.DLC2.70x70.100Z.20230831.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO2.30W.DLC2.70x70.100Z.20230831.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO210W.DLC2.110x110.150ZRA.20230828.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO210W.DLC2.50x50.75Z-LP.20230828.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\CO2 corfile\CO210W.DLC2.70x70.100Z-LP.20230828.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\Fiber corfile\FIBER.112x112.163G.230608.03.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\Fiber corfile\FIBER.174x174.254G.230609.02.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\Fiber corfile\FIBER.220x220.330G.230609.02.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\Fiber corfile\FIBER.300x300.420B.M79.230613.02.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\Fiber corfile\FIBER.330x330.580.M79.230613.01.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\CORFILE\Fiber corfile\FIBER.70x70.100G.230608.03.cor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\DfjzhControlerDll64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\dlc.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\endpoint.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\ezcad3.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\Ezcad3Kernel.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\Ezcad3Motion.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\Ezcad3_Multi.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\gts.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\gt_rn.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\LicenseManager.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\LicenseManager_x64.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\PARAM\Controller.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\PARAM\DefaultHatchParam.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\PARAM\LaserPW.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\PARAM\MarkCfg0">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\PARAM\MarkCfg3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\PARAM\MarkCfg5">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\PARAM\MarkCfg6">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\PARAM\MarkCfg7">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\PARAM\MarkPanelParam.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\PARAM\MarkParamlib.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\PARAM\Motors.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\PARAM\Scan3d.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\PARAM\SysParam.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\PARAM\UserParam.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\PARAM\XYAxisCor.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\QIL.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\Scan3DLib.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\TBarCodeX64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\VWdll.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="EzCad3DLL\WrapAlgorithm.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>

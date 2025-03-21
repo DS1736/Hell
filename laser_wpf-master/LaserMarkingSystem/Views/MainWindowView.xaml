@@ -1,0 +1,67 @@
+﻿<Window x:Class="InIWorkspace.Views.MainWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InIWorkspace.Controls"              
+        xmlns:skia="clr-namespace:SkiaSharp.Views.WPF;assembly=SkiaSharp.Views.WPF"
+        WindowStyle="SingleBorderWindow"        
+        x:Name="MainWindow"
+        xmlns:fluent="urn:fluent-ribbon"
+        Background="White"
+        mc:Ignorable="d"       
+        Title="MainWindow" >
+
+
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding DeleteCommand}" Key="Delete"/>
+        <KeyBinding Command="{Binding DeleteCommand}" Key="Back"/>
+    </Window.InputBindings>
+    <StackPanel>
+        <!--<local:TopBar/>-->
+        <fluent:Ribbon>
+            <!--Tabs-->
+            <fluent:RibbonTabItem Header="Editing 1">
+                <fluent:RibbonGroupBox Header="Edit">
+                    <fluent:Button x:Name="DeleteButton" Command="{Binding DeleteCommand}" Header="Delete"  />
+                    <fluent:Button x:Name="CopyButton"  Header="Copy" />
+                    <fluent:Button x:Name="PasteButton"  Header="Paste" />
+                    <fluent:Button x:Name="CutButton"  Header="Cut" />
+                </fluent:RibbonGroupBox>
+                <fluent:RibbonGroupBox Header="Graphic Tools">
+                    <fluent:Button x:Name="CreateLineButton" Command="{Binding CreateLineCommand}" Header="Line" />
+                    <fluent:Button Name="CreatePolylineButton" Command="{Binding CreatePolylineCommand}" Header="Polyline"  />
+                </fluent:RibbonGroupBox>
+                <fluent:RibbonGroupBox Header="Connections">
+                    <fluent:Button Name="directConnection" Header="Direct" />
+                    <fluent:Button Name="orthoConnection" Header="Orthogonal" />
+                </fluent:RibbonGroupBox>
+            </fluent:RibbonTabItem>
+            <fluent:RibbonTabItem Header="View">
+                <fluent:RibbonGroupBox Header="Viewport">
+                    <fluent:Button x:Name="FitButton" Command="{Binding FitCommand}" Header="Fit View"/>
+                    <fluent:Button x:Name="FillButton" Command="{Binding FillCommand}" Header="Fill View"/>
+                    <fluent:Button x:Name="OneHundredPercentButton" Command="{Binding OneHundredPercentCommand}" Header="100% View"/>
+                    <fluent:Button x:Name="ZoomInButton" Command="{Binding ZoomInCommand}" Header="Zoom In"/>
+                    <fluent:Button x:Name="ZoomOutButton" Command="{Binding ZoomOutCommand}" Header="Zoom Out"/>
+                    <!--<fluent:Button x:Name="UndoZoomButton" Command="{Binding UndoZoomCommand}" Header="Undo Zoom"/>
+                    <fluent:Button x:Name="RedoZoomButton" Command="{Binding RedoZoomCommand}" Header="Redo Zoom"/>-->
+                </fluent:RibbonGroupBox>
+            </fluent:RibbonTabItem>
+            <fluent:RibbonTabItem Header="Snapping">
+                <fluent:RibbonGroupBox Header="Grid Snapping">
+                    <fluent:ToggleButton x:Name="EnableGridSnap" Command="{Binding ToggleGridSnapCommand}" Header="Grid Snap"/>
+                    <fluent:Spinner x:Name="GridUnitX" Value="{Binding GridUnitX}" Header="Unit X" Margin="4"/>
+                    <fluent:Spinner x:Name="GridUnitY" Value="{Binding GridUnitY}" Header="Unit Y"  Margin="4"/>
+                </fluent:RibbonGroupBox>
+                <fluent:RibbonGroupBox Header="Element Snapping">
+                    <fluent:ToggleButton x:Name="EnableElementSnap" Command="{Binding ToggleElementSnapCommand}" Header="Element Snap" IsChecked="{Binding IsElementSnapChecked}"/>
+                    <!--<fluent:ToggleButton x:Name="EnableCornerSnap" Command="{Binding ToggleCornerSnapCommand}" Header="Snap to Corners" IsEnabled="{Binding ElementName=EnableElementSnap, Path=IsChecked}"/>
+                    <fluent:ToggleButton x:Name="EnableMidPointSnap" Command="{Binding EnableMidPointSnapCommand}" Header="Snap to Mid" IsEnabled="{Binding ElementName=EnableElementSnap, Path=IsChecked}"/>
+                    <fluent:ToggleButton x:Name="EnableCenterSnap" Command="{Binding EnableCenterSnapCommand}" Header="Snap to Center" IsEnabled="{Binding ElementName=EnableElementSnap, Path=IsChecked}"/>-->
+                </fluent:RibbonGroupBox>
+            </fluent:RibbonTabItem>
+        </fluent:Ribbon>
+        <ContentControl x:Name="ContentViewModel"  Margin="8"/>
+    </StackPanel>
+</Window>

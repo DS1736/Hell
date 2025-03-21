@@ -1,0 +1,132 @@
+﻿<UserControl x:Class="InIWorkspace.Views.WorkspaceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InIWorkspace.Views"
+             mc:Ignorable="d" 
+             xmlns:draw2DControlLibrary="clr-namespace:Infini.Draw2DControlLibrary;assembly=Infini.Draw2DControlLibrary"
+             xmlns:fluent="urn:fluent-ribbon"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <fluent:Ribbon Grid.Row="0">
+            <!--Tabs-->
+            <fluent:RibbonTabItem Header="Editing">
+                <fluent:RibbonGroupBox Header="Edit">
+                    <fluent:Button x:Name="DeleteButton" Command="{Binding DeleteCommand}" Header="Delete"  />
+                    <fluent:Button x:Name="CopyButton"  Header="Copy" />
+                    <fluent:Button x:Name="PasteButton"  Header="Paste" />
+                    <fluent:Button x:Name="CutButton"  Header="Cut" />
+                </fluent:RibbonGroupBox>
+                <fluent:RibbonGroupBox Header="Graphic Tools">
+                    <fluent:Button x:Name="CreateLineButton" Command="{Binding LineCommand}" Header="Line" />
+                    <fluent:Button Name="CreatePolylineButton" Command="{Binding CreatePolylineCommand}" Header="Polyline" />
+                    <fluent:Button Name="CreateRectangleButton" Command="{Binding CreateRectangleCommand}" Header="Rectangle" />
+                    <fluent:Button Name="CreateCircleButton" Command="{Binding CreateCircleCommand}" Header="Circle" />
+                    <fluent:Button Name="CreateEllipseButton" Command="{Binding CreateEllipseCommand}" Header="Ellipse" />
+                    <fluent:Button Name="CreateTextButton" Command="{Binding CreateTextCommand}" Header="Text" />
+                    <fluent:Button Name="CreateBarcodeButton" Command="{Binding CreateBarcodeCommand}" Header="Barcode" />
+                    <fluent:Button Name="CreateImageButton" Command="{Binding CreateImageCommand}" Header="Image" />
+                </fluent:RibbonGroupBox>
+            </fluent:RibbonTabItem>
+ 
+            <fluent:RibbonTabItem Header="Lazer Integration">
+                <fluent:RibbonGroupBox Header="Init">
+                    <fluent:Button x:Name="InitButton" Command="{Binding InitLazerCommand}" Header="Init Lazer"  />
+                    <fluent:Button x:Name="CloseButton" Command="{Binding StopLazerCommand}" Header="Close" />
+                    <fluent:Button x:Name="HardwareButton"  Command="{Binding OpenHardwareSettingsCommand}" Header="Hardware" />
+                    <fluent:Button x:Name="PensettingButton"  Command="{Binding OpenPenSettingsCommand}" Header="Pen Settings" />
+                 
+                </fluent:RibbonGroupBox>
+                <fluent:RibbonGroupBox Header="Marking">
+                    <fluent:Button Name="StartMarkingCommand" Command="{Binding StartMarkingCommand}" Header="Start Marking"  />
+                    <fluent:Button x:Name="RedButton"  Command="{Binding StartRedCommand}" Header="Start Red" />
+                    <fluent:Button x:Name="StopMarkingButton"  Command="{Binding StopMarkingCommand}" Header="Stop Marking" />
+                    <fluent:Button x:Name="StopRedButton"  Command="{Binding StopRedCommand}" Header="Stop Red" />
+                </fluent:RibbonGroupBox>
+                <fluent:RibbonGroupBox Header="Ezcad File">
+                   <fluent:Button Name="OpenEzcadFileCommand" Command="{Binding OpenEzcadFileCommand}" Header="Open Ezcad File"  />
+                   <fluent:Button Name="SaveEzcadFileCommand"  Command="{Binding SaveEzcadFileCommand}" Header="Save Ezcad File" />
+               </fluent:RibbonGroupBox>
+            </fluent:RibbonTabItem>
+            <fluent:RibbonTabItem Header="View">
+                <fluent:RibbonGroupBox Header="Viewport">
+                    <fluent:Button x:Name="FitButton" Command="{Binding FitCommand}" Header="Fit View"/>
+                    <fluent:Button x:Name="FillButton" Command="{Binding FillCommand}" Header="Fill View"/>
+                    <fluent:Button x:Name="OneHundredPercentButton" Command="{Binding OneHundredPercentCommand}" Header="100% View"/>
+                    <fluent:Button x:Name="ZoomInButton" Command="{Binding ZoomInCommand}" Header="Zoom In"/>
+                    <fluent:Button x:Name="ZoomOutButton" Command="{Binding ZoomOutCommand}" Header="Zoom Out"/>
+                    <!--<fluent:Button x:Name="UndoZoomButton" Command="{Binding UndoZoomCommand}" Header="Undo Zoom"/>
+            <fluent:Button x:Name="RedoZoomButton" Command="{Binding RedoZoomCommand}" Header="Redo Zoom"/>-->
+                </fluent:RibbonGroupBox>
+            </fluent:RibbonTabItem>
+            <fluent:RibbonTabItem Header="Snapping">
+                <fluent:RibbonGroupBox Header="Grid Snapping">
+                    <fluent:ToggleButton x:Name="EnableGridSnap" Command="{Binding ToggleGridSnapCommand}" Header="Grid Snap"/>
+                    <fluent:Spinner x:Name="GridUnitX" Value="{Binding GridUnitX}" Header="Unit X" Margin="4"/>
+                    <fluent:Spinner x:Name="GridUnitY" Value="{Binding GridUnitY}" Header="Unit Y"  Margin="4"/>
+                </fluent:RibbonGroupBox>
+                <fluent:RibbonGroupBox Header="Element Snapping">
+                    <fluent:ToggleButton x:Name="EnableElementSnap" Command="{Binding ToggleElementSnapCommand}" Header="Element Snap" IsChecked="{Binding IsElementSnapChecked}"/>
+                    <!--<fluent:ToggleButton x:Name="EnableCornerSnap" Command="{Binding ToggleCornerSnapCommand}" Header="Snap to Corners" IsEnabled="{Binding ElementName=EnableElementSnap, Path=IsChecked}"/>
+            <fluent:ToggleButton x:Name="EnableMidPointSnap" Command="{Binding EnableMidPointSnapCommand}" Header="Snap to Mid" IsEnabled="{Binding ElementName=EnableElementSnap, Path=IsChecked}"/>
+            <fluent:ToggleButton x:Name="EnableCenterSnap" Command="{Binding EnableCenterSnapCommand}" Header="Snap to Center" IsEnabled="{Binding ElementName=EnableElementSnap, Path=IsChecked}"/>-->
+                </fluent:RibbonGroupBox>
+            </fluent:RibbonTabItem>
+        </fluent:Ribbon>
+
+        <ScrollViewer Grid.Row="1" x:Name="scroller" CanContentScroll="True" HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+
+            <draw2DControlLibrary:ZoomAndPanControl x:Name="zoomAndPanControl" MinimumZoom="0.0001"
+                                          FitCommandDepProp="{Binding FitCommand, Mode=OneWayToSource}"
+                                          FillCommandDepProp="{Binding FillCommand, Mode=OneWayToSource}"
+                                          OneHundredPercentCommandDepProp="{Binding OneHundredPercentCommand, Mode=OneWayToSource}"
+                                          ZoomInCommandDepProp="{Binding ZoomInCommand, Mode=OneWayToSource}"
+                                          ZoomOutCommandDepProp="{Binding ZoomOutCommand, Mode=OneWayToSource}"
+                                          UndoZoomCommandDepProp="{Binding UndoZoomCommand, Mode=OneWayToSource}"
+                                          RedoZoomCommandDepProp="{Binding  RedoZoomCommand, Mode=OneWayToSource}">
+
+                <draw2DControlLibrary:Draw2DControl 
+                    Canvas="{Binding Canvas}" 
+                    x:Name="Draw2DControl"
+                    WorldMousePosX="{Binding WorldMousePosX, Mode=TwoWay}"
+                    WorldMousePosY="{Binding WorldMousePosY, Mode=TwoWay}"
+                    RenderedItemsCount="{Binding RenderedItemsCount, Mode=TwoWay}"
+                    Margin="4"
+                    Background="WhiteSmoke"
+                    ViewportWidth="{Binding ElementName=zoomAndPanControl,Path=ContentViewportWidth, Mode=TwoWay}"
+                    ViewportHeight="{Binding ElementName=zoomAndPanControl,Path=ContentViewportHeight, Mode=TwoWay}"
+                    ContentOffsetX ="{Binding ElementName=zoomAndPanControl,Path=ContentOffsetX, Mode=TwoWay}"
+                    ContentOffsetY="{Binding ElementName=zoomAndPanControl,Path=ContentOffsetY, Mode=TwoWay}"                    
+                    />
+
+            </draw2DControlLibrary:ZoomAndPanControl>
+
+        </ScrollViewer>
+        <Grid Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <TextBlock>Viewport:</TextBlock>
+                <TextBlock Margin="5 0 0 0" Text="{Binding ElementName=Draw2DControl, Path=ContentOffsetX, StringFormat=N2}" />
+                <TextBlock>/</TextBlock>
+                <TextBlock Text="{Binding ElementName=Draw2DControl, Path=ContentOffsetY, StringFormat=N2}" />
+                <TextBlock> ,w:</TextBlock>
+                <TextBlock Text="{Binding ElementName=Draw2DControl, Path=ViewportWidth, StringFormat=N2}" />
+                <TextBlock> ,h:</TextBlock>
+                <TextBlock Text="{Binding ElementName=Draw2DControl, Path=ViewportHeight, StringFormat=N2}" />
+                <TextBlock Text="{Binding LazerStatus}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

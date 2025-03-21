@@ -1,0 +1,450 @@
+﻿<Window x:Class="InIWorkspace.Views.GenerateKeyView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InIWorkspace.Views"
+        xmlns:Utils="clr-namespace:InIWorkspace.Utils"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        WindowState="Normal"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        Title="IZICODE Touch Prototype" 
+        Height="370" 
+        Width="600">
+
+    <!-- Resources: Converter for placeholder visibility -->
+    <Window.Resources>
+        <Utils:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+
+    <Border Background="#FFFFFF" 
+            BorderBrush="Gray" 
+            BorderThickness="0.5" 
+            CornerRadius="15" 
+            Margin="1">
+        <!-- Ensure the Border's content respects the CornerRadius -->
+        <Border.Clip>
+            <RectangleGeometry RadiusX="15" RadiusY="15">
+                <RectangleGeometry.Rect>
+                    <Rect Width="600" Height="370"/>
+                </RectangleGeometry.Rect>
+            </RectangleGeometry>
+        </Border.Clip>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <!-- Header row -->
+                <RowDefinition Height="*"/>
+                <!-- Content row -->
+            </Grid.RowDefinitions>
+
+            <!-- Header padding -->
+            <Border Grid.Row="0" Background="#FFFFFF"/>
+
+            <!-- Header content -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"/>
+                    <!-- Left padding -->
+                    <ColumnDefinition Width="*"/>
+                    <!-- Title area -->
+                    <ColumnDefinition Width="30"/>
+                    <!-- Minimize button -->
+                    <ColumnDefinition Width="30"/>
+                    <!-- Close button -->
+                    <ColumnDefinition Width="10"/>
+                    <!-- Right padding -->
+                </Grid.ColumnDefinitions>
+
+                <!-- Window title -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Generate Key" 
+                               FontSize="24" 
+                               FontWeight="SemiBold" 
+                               Margin="3,2,0,0" 
+                               Foreground="Black" 
+                               FontFamily="/YourProjectName;component/Fonts/#Montserrat"/>
+                </StackPanel>
+
+                <!-- Minimize button -->
+                <Button Name="btnMin" 
+                        Grid.Column="2" 
+                        Content="-" 
+                        FontWeight="Bold" 
+                        FontSize="20" 
+                        Cursor="Hand" 
+                        Click="btnMin_Click">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="White"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="3" 
+                                    Height="26" 
+                                    Width="28" 
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center" 
+                                                  HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!-- Close button -->
+                <Button Name="btnClose" 
+                        Grid.Column="3" 
+                        Content="X" 
+                        FontWeight="Bold" 
+                        FontSize="16" 
+                        Cursor="Hand" 
+                        Click="btnClose_Click">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="White"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="5" 
+                                    Height="26" 
+                                    Width="28" 
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center" 
+                                                  HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+
+            <!-- Main content area -->
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <!-- Input fields -->
+                    <RowDefinition Height="60"/>
+                    <!-- Bottom buttons -->
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="80"/>
+                            <!-- Customer Name -->
+                            <RowDefinition Height="80"/>
+                            <!-- Mac ID -->
+                            <RowDefinition Height="80"/>
+                            <!-- Activation Code -->
+                            <RowDefinition Height="80"/>
+                            <!-- Extra padding -->
+                            <RowDefinition Height="*"/>
+                            <!-- Remaining space -->
+                        </Grid.RowDefinitions>
+
+                        <!-- Customer Name Section -->
+                        <StackPanel Grid.Row="0" Orientation="Vertical">
+                            <TextBlock Text="Customer Name" 
+                                       Margin="16,10,0,0" 
+                                       FontFamily="Segoe UI" 
+                                       FontSize="14" 
+                                       FontWeight="SemiBold"
+                                       Foreground="Black"/>
+                            <Border Style="{StaticResource RoundedBorderStyle}" 
+                                    BorderBrush="#CCCCCC" 
+                                    BorderThickness="1" 
+                                    Width="400" 
+                                    Height="33" 
+                                    Margin="15,5,0,0" 
+                                    HorizontalAlignment="Left">
+                                <Grid>
+                                    <TextBlock Text="Enter Customer Name" 
+                                               Foreground="Gray" 
+                                               FontFamily="Inter" 
+                                               FontSize="12" 
+                                               Margin="5,0,0,0" 
+                                               VerticalAlignment="Center" 
+                                               Visibility="{Binding ElementName=txtCustomerName, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    <TextBox Name="txtCustomerName" 
+                                             Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" 
+                                             Padding="5" 
+                                             FontFamily="Inter" 
+                                             FontSize="20" 
+                                             BorderThickness="0" 
+                                             VerticalContentAlignment="Center" 
+                                             Background="Transparent"/>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+
+                        <!-- Mac ID Section -->
+                        <StackPanel Grid.Row="1" Orientation="Vertical">
+                            <TextBlock Text="Mac ID" 
+                                       Margin="16,10,0,0" 
+                                       FontFamily="Segoe UI" 
+                                       FontSize="14" 
+                                       FontWeight="SemiBold"
+                                       Foreground="Black"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="420"/>
+                                    <!-- TextBox width + padding -->
+                                    <ColumnDefinition Width="*"/>
+                                    <!-- Button area -->
+                                </Grid.ColumnDefinitions>
+                                <Border Style="{StaticResource RoundedBorderStyle}" 
+                                        BorderBrush="#CCCCCC" 
+                                        BorderThickness="1" 
+                                        Width="400" 
+                                        Height="36" 
+                                        Margin="15,5,0,0" 
+                                        HorizontalAlignment="Left" 
+                                        Grid.Column="0">
+                                    <Grid>
+                                        <TextBlock Text="Enter Mac ID" 
+                                                   Foreground="Gray" 
+                                                   FontFamily="Inter" 
+                                                   FontSize="12" 
+                                                   Margin="5,0,0,0" 
+                                                   VerticalAlignment="Center" 
+                                                   Visibility="{Binding ElementName=txtMacID, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        <TextBox Name="txtMacID" 
+                                                 Text="{Binding MacAddress, UpdateSourceTrigger=PropertyChanged}" 
+                                                 Padding="5,5,0,0" 
+                                                 FontFamily="Inter" 
+                                                 FontSize="18" 
+                                                 BorderThickness="0" 
+                                                 Background="Transparent" 
+                                                 VerticalContentAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+                                <Button Command="{Binding FetchMacAddressCommand}" 
+                                        Background="#FF000000" 
+                                        Grid.Column="1" 
+                                        Cursor="Hand" 
+                                        Margin="10,5,10,0" 
+                                        VerticalAlignment="Top" 
+                                        HorizontalAlignment="Left" 
+                                        BorderThickness="0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Fetch" 
+                                                   Height="25" 
+                                                   Margin="50,7,0,0" 
+                                                   FontWeight="Bold"
+                                                   FontFamily="/YourProjectName;component/Fonts/#Poppins"/>
+                                    </StackPanel>
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Background" Value="#94969A"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter Property="Height" Value="40"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#94969A"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border CornerRadius="4" 
+                                                    Height="35" 
+                                                    Width="150" 
+                                                    Background="{TemplateBinding Background}">
+                                                <ContentPresenter VerticalAlignment="Center" 
+                                                                  HorizontalAlignment="Left"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- Activation Code Section -->
+                        <StackPanel Grid.Row="2" Orientation="Vertical">
+                            <TextBlock Text="Activation Code" 
+                                       Margin="14,10,0,0" 
+                                       FontFamily="Segoe UI" 
+                                       FontSize="14" 
+                                       FontWeight="SemiBold"
+                                       Foreground="Black"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="420"/>
+                                    <!-- TextBox width + padding -->
+                                    <ColumnDefinition Width="*"/>
+                                    <!-- Button area -->
+                                </Grid.ColumnDefinitions>
+                                <Border Style="{StaticResource RoundedBorderStyle}" 
+                                        BorderBrush="#CCCCCC" 
+                                        BorderThickness="1" 
+                                        Width="400" 
+                                        Height="36" 
+                                        Margin="15,5,0,0" 
+                                        HorizontalAlignment="Left" 
+                                        Grid.Column="0">
+                                    <Grid>
+                                        <TextBlock Text="Enter Activation Code" 
+                                                   Foreground="Gray" 
+                                                   FontFamily="Inter" 
+                                                   FontSize="12" 
+                                                   Margin="5,0,0,0" 
+                                                   VerticalAlignment="Center" 
+                                                   Visibility="{Binding ElementName=txtActivationCode, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        <TextBox Name="txtActivationCode" 
+                                                 Text="{Binding Key, UpdateSourceTrigger=PropertyChanged}" 
+                                                 Padding="5,5,0,0" 
+                                                 FontFamily="Inter" 
+                                                 FontSize="18" 
+                                                 BorderThickness="0" 
+                                                 Background="Transparent" 
+                                                 VerticalContentAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+                                <Button Command="{Binding GenerateKeyCommand}" 
+                                        Background="#FF000000" 
+                                        Grid.Column="1" 
+                                        Cursor="Hand" 
+                                        Margin="10,5,10,0" 
+                                        VerticalAlignment="Top" 
+                                        HorizontalAlignment="Left" 
+                                        BorderThickness="0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Generate" 
+                                                   Height="25" 
+                                                   Margin="40,7,0,0" 
+                                                   FontWeight="Bold"
+                                                   FontFamily="/YourProjectName;component/Fonts/#Poppins"/>
+                                    </StackPanel>
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Background" Value="#94969A"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter Property="Height" Value="40"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#94969A"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border CornerRadius="4" 
+                                                    Height="35" 
+                                                    Width="150" 
+                                                    Background="{TemplateBinding Background}">
+                                                <ContentPresenter VerticalAlignment="Center" 
+                                                                  HorizontalAlignment="Left"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <!-- Bottom Buttons -->
+                <Button Command="{Binding CancelCommand}" 
+                        Grid.Row="1" 
+                        Cursor="Hand" 
+                        Margin="0,10,150,0" 
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Right" 
+                        BorderThickness="0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Cancel" 
+                                   Height="25" 
+                                   Margin="30,7,0,0" 
+                                   FontWeight="Bold"
+                                   FontFamily="/YourProjectName;component/Fonts/#Poppins"/>
+                    </StackPanel>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#94969A"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontSize" Value="16"/>
+                            <Setter Property="Height" Value="40"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#94969A"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="4" 
+                                    Height="40" 
+                                    Width="120" 
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center" 
+                                                  HorizontalAlignment="Left"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Button Command="{Binding AddKeyCommand}" 
+                        Grid.Row="1" 
+                        Cursor="Hand" 
+                        Margin="0,10,15,0" 
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Right" 
+                        BorderThickness="0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Add Key" 
+                                   Height="25" 
+                                   Margin="30,7,0,0" 
+                                   FontWeight="Bold"
+                                   FontFamily="/YourProjectName;component/Fonts/#Poppins"/>
+                    </StackPanel>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#2B7CDF"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontSize" Value="16"/>
+                            <Setter Property="Height" Value="40"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#2B7CDF"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="4" 
+                                    Height="40" 
+                                    Width="120" 
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center" 
+                                                  HorizontalAlignment="Left"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
