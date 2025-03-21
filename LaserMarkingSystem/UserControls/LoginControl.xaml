@@ -1,0 +1,112 @@
+﻿<UserControl x:Class="InIWorkspace.UserControls.LoginControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InIWorkspace.UserControls"
+             mc:Ignorable="d" 
+             Height="550" Width="900">
+    <Border Background="#FFFFFF" BorderThickness="1" BorderBrush="black">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Background="#FFFFFF"></Border>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="350"></ColumnDefinition>
+                    <ColumnDefinition Width="30"></ColumnDefinition>
+                    <ColumnDefinition Width="30"></ColumnDefinition>
+                    <ColumnDefinition Width="10"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Center">
+                    <Image Name="headerLogo" Source="pack://application:,,,/Resources/Images/IFNI-Header-Logo.png" Width="67" Height="18" Stretch="Fill"></Image>
+                    <TextBlock Name="seprator" Text=" | " Height="26" FontSize="20" FontWeight="Bold" Margin="3,-4,0,0"></TextBlock>
+                    <TextBlock Text="IZICODE Touch Prototype" Background="#FFFFFF" FontSize="18" Margin="3,2,0,0" Foreground="black" FontFamily="Inter">
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <Image Source="pack://application:,,,/Resources/Images/TopClockIcon.png" Height="15" Width="15" Margin="0,0,5,0"></Image>
+                    <TextBox x:Name="btnDisplayTime" BorderThickness="0" Text="Hello Sir" Width="300" Background="#FFFFFF" Margin="0,0,10,0" FontSize="14" FontFamily="Inter"></TextBox>
+                </StackPanel>
+                <Button Name="btnMin" Cursor="Hand" Grid.Column="3" Content="-" FontWeight="Bold" FontSize="20">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="Transparent"></Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#2B7CDF"></Setter>
+                                    <Setter Property="Foreground" Value="White"></Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="3" Height="26" Width="28" Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"></ContentPresenter>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button Name="btnClose" Cursor="Hand" Grid.Column="4" Content="X" FontWeight="Bold" FontSize="16">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="Transparent"></Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#DA251D"></Setter>
+                                    <Setter Property="Foreground" Value="White"></Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="5" Height="26" Width="28" Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"></ContentPresenter>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"></RowDefinition>
+                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="200"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image Name="logo" Source="pack://application:,,,/Resources/Images/ApplicationLogo.png" Width="198" Height="53" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="Fill"></Image>
+                </StackPanel>
+                <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock  Text="Select User Type" FontSize="28" Margin="10,0,0,0" FontFamily="Inter" HorizontalAlignment="Left"></TextBlock>
+                </StackPanel>
+                <Grid Grid.Row="2" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"></ColumnDefinition>
+                        <ColumnDefinition Width="50*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Cursor="Hand" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                        <Image Name="adminUser" Source="pack://application:,,,/Resources/Images/AdminUserLogin.png" Width="150" Height="150" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="Fill"></Image>
+                        <TextBlock  Text="Admin" FontSize="16" Margin="50,0,0,0" FontFamily="Inter" FontWeight="Bold" HorizontalAlignment="Left"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Cursor="Hand" VerticalAlignment="Bottom" HorizontalAlignment="left">
+                        <Image Name="normalUser" Source="pack://application:,,,/Resources/Images/NormalUserLogin.png" Width="150" Height="150" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="Fill"></Image>
+                        <TextBlock  Text="User" FontSize="16" Margin="50,0,0,0" FontFamily="Inter" FontWeight="Bold" HorizontalAlignment="Left"></TextBlock>
+                    </StackPanel>
+                </Grid>
+                <StackPanel Grid.Row="3" VerticalAlignment="Bottom">
+                    <Image Name="background" Source="pack://application:,,,/Resources/Images/LoginPageBackGround.png" Width="550" Height="350" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="Fill"></Image>
+                    <TextBlock  Text="Infini app, LLC. All rights reserved." x:Name="txtCopyRightText" FontSize="16" Margin="10,0,0,0" FontFamily="Inter" HorizontalAlignment="Left"></TextBlock>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

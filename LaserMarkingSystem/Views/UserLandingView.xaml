@@ -1,0 +1,571 @@
+﻿<UserControl x:Class="InIWorkspace.Views.UserLandingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InIWorkspace.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <!-- TextBox styling for consistent dark theme input fields -->
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#222222"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#555555"/>
+            <Setter Property="Height" Value="18"/>
+            <Setter Property="Padding" Value="5,0,25,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="1">
+                            <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ComboBox styling with custom dropdown arrow and dark theme -->
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="#222222"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#555555"/>
+            <Setter Property="Height" Value="18"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="1">
+                                <Grid>
+                                    <ContentPresenter x:Name="ContentSite"
+                                                      Content="{TemplateBinding SelectionBoxItem}"
+                                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                      ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                      Margin="5,0"
+                                                      VerticalAlignment="Center"
+                                                      HorizontalAlignment="Left"/>
+                                    <Path x:Name="Arrow"
+                                          Data="M0,0 L4,4 L8,0 Z"
+                                          Fill="White"
+                                          HorizontalAlignment="Right"
+                                          Margin="5"
+                                          VerticalAlignment="Center"
+                                          Width="8"
+                                          Height="4"/>
+                                </Grid>
+                            </Border>
+                            <Popup x:Name="Popup"
+                                   Placement="Bottom"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   AllowsTransparency="True"
+                                   Focusable="False"
+                                   PopupAnimation="Slide">
+                                <Grid x:Name="DropDown"
+                                      SnapsToDevicePixels="True"
+                                      MinWidth="{TemplateBinding ActualWidth}"
+                                      MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border x:Name="DropDownBorder"
+                                            Background="#222222"
+                                            BorderThickness="1"
+                                            BorderBrush="#555555"
+                                            CornerRadius="1"/>
+                                    <ScrollViewer Margin="4,6,4,6">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="Background" Value="#222222"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Padding" Value="5"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ComboBoxItem">
+                                    <Border Background="{TemplateBinding Background}"
+                                            Padding="{TemplateBinding Padding}">
+                                        <ContentPresenter/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Up arrow button style for numeric controls -->
+        <Style x:Key="UpButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Width" Value="15"/>
+            <Setter Property="Height" Value="12"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <Path Data="M0,4 L4,0 L8,4 Z" Fill="White"
+                                  Width="8" Height="4" Stretch="Fill"
+                                  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Down arrow button style for numeric controls -->
+        <Style x:Key="DownButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Width" Value="15"/>
+            <Setter Property="Height" Value="12"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <Path Data="M0,0 L4,4 L8,0 Z" Fill="White"
+                                  Width="8" Height="4" Stretch="Fill"
+                                  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Base style for rounded buttons throughout the UI -->
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#222222"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#555555"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Variant of button style with white border for emphasis -->
+        <Style x:Key="WhiteBorderButtonStyle" TargetType="Button" BasedOn="{StaticResource RoundedButtonStyle}">
+            <Setter Property="BorderBrush" Value="#FFFFFF"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="#222222">
+        <!-- Main layout rows: top bar, content, status bar -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top toolbar with navigation and action buttons -->
+        <DockPanel Grid.Row="0" Background="#222222">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                <!-- File menu button -->
+                <Button Width="50" Height="50" Margin="5,0" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0">
+                    <StackPanel>
+                        <Image Source="/Resources/Images/folder.jpg" Width="20" Height="20"/>
+                        <TextBlock Text="FILE" FontSize="10" Foreground="White" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <!-- Edit menu button -->
+                <Button Width="50" Height="50" Margin="5,0" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0">
+                    <StackPanel>
+                        <Image Source="/Resources/Images/彼此:Editt.png" Width="20" Height="20"/>
+                        <TextBlock Text="EDIT" FontSize="10" Foreground="White" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <!-- Tools menu button -->
+                <Button Width="50" Height="50" Margin="5,0" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0">
+                    <StackPanel>
+                        <Image Source="/Resources/Images/Tools.png" Width="20" Height="20"/>
+                        <TextBlock Text="TOOLS" FontSize="10" Foreground="White" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <!-- Pen settings button -->
+                <Button Width="50" Height="50" Margin="5,0" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0">
+                    <StackPanel>
+                        <Image Source="/Resources/Images/Pen.png" Width="20" Height="20"/>
+                        <TextBlock Text="PEN" FontSize="10" Foreground="White" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <!-- General settings button -->
+                <Button Width="50" Height="50" Margin="5,0" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0">
+                    <StackPanel>
+                        <Image Source="/Resources/Images/settings.jpg" Width="20" Height="20"/>
+                        <TextBlock Text="SETTINGS" FontSize="10" Foreground="White" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <!-- Markings options button -->
+                <Button Width="50" Height="50" Margin="5,0" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0">
+                    <StackPanel>
+                        <Image Source="/Resources/Images/markings.jpeg" Width="20" Height="20"/>
+                        <TextBlock Text="MARKINGS" FontSize="10" Foreground="White" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <!-- Hatch pattern button -->
+                <Button Width="50" Height="50" Margin="5,0" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0">
+                    <StackPanel>
+                        <Image Source="/Resources/Images/Hatch.jpg" Width="20" Height="20"/>
+                        <TextBlock Text="HATCH" FontSize="10" Foreground="White" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <!-- Laser control buttons aligned further to the right -->
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" Margin="0,0,120,0">
+                <!-- Laser off button with red background -->
+                <Button Width="120" Height="30" Background="Red" BorderThickness="0" Margin="5,0" Style="{StaticResource RoundedButtonStyle}">
+                    <TextBlock Text="LASER OFF" FontSize="12" Foreground="White"/>
+                </Button>
+                <!-- Start marking button with white border for visibility -->
+                <Button Width="120" Height="30" Style="{StaticResource WhiteBorderButtonStyle}" BorderThickness="1" Margin="5,0">
+                    <TextBlock Text="START MARKING" FontSize="12" Foreground="White"/>
+                </Button>
+            </StackPanel>
+            <StackPanel/>
+        </DockPanel>
+
+        <!-- Main content area with tools, canvas, and properties -->
+        <Grid Grid.Row="1" Background="#222222">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left vertical toolbar for drawing tools -->
+            <Border Grid.Column="0" Background="#222222" BorderBrush="#555555" BorderThickness="1" Margin="5" CornerRadius="5">
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <Button Height="20" Margin="0,5" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0">
+                        <Image Source="/Resources/Images/Cursor.png" Width="20" Height="20"/>
+                    </Button>
+                    <Button Height="20" Margin="0,5" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0">
+                        <Image Source="/Resources/Images/cursor click.png" Width="20" Height="20"/>
+                    </Button>
+                    <Button Height="20" Margin="0,5" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0">
+                        <Image Source="/Resources/Images/Point.png" Width="20" Height="20"/>
+                    </Button>
+                    <Button Height="20" Margin="0,5" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0">
+                        <Image Source="/Resources/Images/Slash.png" Width="20" Height="20"/>
+                    </Button>
+                    <Button Height="20" Margin="0,5" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0">
+                        <Image Source="/Resources/Images/Rectangle.png" Width="20" Height="20"/>
+                    </Button>
+                    <Button Height="20" Margin="0,5" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0">
+                        <Image Source="/Resources/Images/Circle.png" Width="20" Height="20"/>
+                    </Button>
+                    <Button Height="20" Margin="0,5" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0">
+                        <Image Source="/Resources/Images/ellipse.png" Width="20" Height="20"/>
+                    </Button>
+                    <Button Height="20" Margin="0,5" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0">
+                        <Image Source="/Resources/Images/Pentagon.png" Width="20" Height="20"/>
+                    </Button>
+                    <Button Height="20" Margin="0,5" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0">
+                        <Image Source="/Resources/Images/T.png" Width="20" Height="20"/>
+                    </Button>
+                    <Button Height="20" Margin="0,5" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0">
+                        <Image Source="/Resources/Images/Barcode.png" Width="20" Height="20"/>
+                    </Button>
+                    <Button Height="20" Margin="0,5" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0">
+                        <Image Source="/Resources/Images/photo.png" Width="20" Height="20"/>
+                    </Button>
+                    <Button Height="20" Margin="0,5" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0">
+                        <Image Source="/Resources/Images/splash.jpg" Width="20" Height="20"/>
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <!-- Central drawing canvas -->
+            <Canvas Grid.Column="1" Background="#333333" Margin="10"/>
+
+            <!-- Right properties panel -->
+            <Grid Grid.Column="2" Background="#222222" Width="200">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="70*"/>
+                </Grid.RowDefinitions>
+
+                <!-- List of objects in the workspace -->
+                <Border Grid.Row="0" Background="#222222" BorderBrush="#555555" BorderThickness="1" CornerRadius="5" Margin="3">
+                    <Grid Margin="0,0,0,-5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="12*"/>
+                            <RowDefinition Height="15*"/>
+                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="20*"/>
+                            <RowDefinition Height="20*"/>
+                            <RowDefinition Height="20*"/>
+                            <RowDefinition Height="20*"/>
+                            <RowDefinition Height="16*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="29.1"/>
+                            <ColumnDefinition Width="29.1"/>
+                            <ColumnDefinition Width="38.8"/>
+                            <ColumnDefinition Width="48.5"/>
+                            <ColumnDefinition Width="48.5"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Object list header -->
+                        <DockPanel Grid.Row="0" Grid.ColumnSpan="5">
+                            <TextBlock Text="Object list" FontSize="8" FontWeight="Bold" Foreground="White" DockPanel.Dock="Left" Margin="5,1,0,0"/>
+                            <Button Width="15" Height="15" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" DockPanel.Dock="Right" Margin="0,0,2,0" HorizontalAlignment="Right">
+                                <TextBlock Text="X" FontSize="8" Foreground="White"/>
+                            </Button>
+                        </DockPanel>
+
+                        <!-- Column headers for object list -->
+                        <TextBlock Grid.Row="2" Grid.Column="2" Text="SL. No" FontSize="6" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="2" Grid.Column="3" Text="Name" FontSize="6" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="2" Grid.Column="4" Text="Type" FontSize="6" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        <!-- Object list entries -->
+                        <!-- Row 3 -->
+                        <Button Grid.Row="3" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" HorizontalAlignment="Center">
+                            <Image Source="/Resources/Images/Draw-icons/eye.jpg" Width="10" Height="10"/>
+                        </Button>
+                        <Button Grid.Row="3" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" HorizontalAlignment="Center">
+                            <Image Source="/Resources/Images/photo.png" Width="10" Height="10"/>
+                        </Button>
+                        <TextBlock Grid.Row="3" Grid.Column="2" Text="1" FontSize="6" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Row="3" Grid.Column="3" Text="Image 1" FontSize="6" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Button Grid.Row="3" Grid.Column="4" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" HorizontalAlignment="Left">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Resources/Images/img-table.svg" Width="10" Height="10" Margin="2,0,2,0"/>
+                                <TextBlock Text="Image" FontSize="6" Foreground="White" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Row 4 -->
+                        <Button Grid.Row="4" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" HorizontalAlignment="Center">
+                            <Image Source="/Resources/Images/Draw-icons/eye.jpg" Width="10" Height="10"/>
+                        </Button>
+                        <Button Grid.Row="4" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" HorizontalAlignment="Center">
+                            <Image Source="/Resources/Images/T.png" Width="10" Height="10"/>
+                        </Button>
+                        <TextBlock Grid.Row="4" Grid.Column="2" Text="2" FontSize="6" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Row="4" Grid.Column="3" Text="Text 1" FontSize="6" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Button Grid.Row="4" Grid.Column="4" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" HorizontalAlignment="Left">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Resources/Images/text-table.svg" Width="10" Height="10" Margin="2,0,2,0"/>
+                                <TextBlock Text="Text" FontSize="6" Foreground="White" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Row 5 -->
+                        <Button Grid.Row="5" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" HorizontalAlignment="Center">
+                            <Image Source="/Resources/Images/Draw-icons/eye.jpg" Width="10" Height="10"/>
+                        </Button>
+                        <Button Grid.Row="5" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" HorizontalAlignment="Center">
+                            <Image Source="/Resources/Images/T.png" Width="10" Height="10"/>
+                        </Button>
+                        <TextBlock Grid.Row="5" Grid.Column="2" Text="3" FontSize="6" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Row="5" Grid.Column="3" Text="Text 2" FontSize="6" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Button Grid.Row="5" Grid.Column="4" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" HorizontalAlignment="Left">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Resources/Images/text-table.svg" Width="10" Height="10" Margin="2,0,2,0"/>
+                                <TextBlock Text="Text" FontSize="6" Foreground="White" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Row 6 -->
+                        <Button Grid.Row="6" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" HorizontalAlignment="Center">
+                            <Image Source="/Resources/Images/Draw-icons/eye.jpg" Width="10" Height="10"/>
+                        </Button>
+                        <Button Grid.Row="6" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" HorizontalAlignment="Center">
+                            <Image Source="/Resources/Images/T.png" Width="10" Height="10"/>
+                        </Button>
+                        <TextBlock Grid.Row="6" Grid.Column="2" Text="4" FontSize="6" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Row="6" Grid.Column="3" Text="Ellipse 1" FontSize="6" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Button Grid.Row="6" Grid.Column="4" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" HorizontalAlignment="Left">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Resources/Images/ellipse-table.svg" Width="10" Height="10" Margin="2,0,2,0"/>
+                                <TextBlock Text="Ellipse" FontSize="6" Foreground="White" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <!-- Properties panel for selected object -->
+                <Border Grid.Row="1" Background="#222222" BorderBrush="#555555" BorderThickness="1" CornerRadius="5" Margin="3">
+                    <StackPanel>
+                        <!-- Header with close button -->
+                        <DockPanel Margin="3,3,0,5">
+                            <TextBlock Text="Object Property" FontSize="8" FontWeight="Bold" Foreground="White" DockPanel.Dock="Left"/>
+                            <Button Width="12" Height="12" Style="{StaticResource RoundedButtonStyle}" BorderThickness="0" DockPanel.Dock="Right" HorizontalAlignment="Right">
+                                <TextBlock Text="X" FontSize="6" Foreground="White"/>
+                            </Button>
+                        </DockPanel>
+
+                        <!-- Position and size controls -->
+                        <Grid Margin="3,0,3,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Position" FontSize="8" Foreground="White" Margin="0,0,0,3"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                    <TextBlock Text="X:" FontSize="8" Width="15" Foreground="White" VerticalAlignment="Center"/>
+                                    <TextBox Width="50" Text="-96.4166" FontSize="8"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Y:" FontSize="8" Width="15" Foreground="White" VerticalAlignment="Center"/>
+                                    <TextBox Width="50" Text="-96.4166" FontSize="8"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Size (MM)" FontSize="8" Foreground="White" Margin="0,0,0,3"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                    <TextBlock Text="W:" FontSize="8" Width="15" Foreground="White" VerticalAlignment="Center"/>
+                                    <TextBox Width="50" Text="51.0926" FontSize="8"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="H:" FontSize="8" Width="15" Foreground="White" VerticalAlignment="Center"/>
+                                    <TextBox Width="50" Text="20.7988" FontSize="8"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Button Width="12" Height="12" Content="🔒" FontSize="8" Foreground="White" Margin="0,0,0,3" ToolTip="Lock Aspect Ratio" Style="{StaticResource RoundedButtonStyle}"/>
+                                <Button Width="12" Height="12" Content="QR" FontSize="8" Foreground="White" ToolTip="Generate QR Code" Style="{StaticResource RoundedButtonStyle}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Divider line -->
+                        <Rectangle Height="1" Fill="#555555" Margin="10,5"/>
+
+                        <!-- Additional property controls -->
+                        <Grid Margin="3,0,3,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0,0,0,3">
+                                    <TextBlock Text="Z:" FontSize="8" Width="15" Foreground="White" VerticalAlignment="Center"/>
+                                    <TextBox Width="50" Text="0" FontSize="8"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,0,0,3">
+                                    <TextBox Width="50" Text="0" FontSize="8" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0,0,0,3">
+                                    <TextBlock Text="A:" FontSize="8" Width="15" Foreground="White" VerticalAlignment="Center"/>
+                                    <TextBox Width="50" Text="0" FontSize="8"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,0,0,3">
+                                    <ComboBox Width="50" SelectedIndex="0" FontSize="8" Margin="5,0,0,0">
+                                        <ComboBoxItem Content="1"/>
+                                        <ComboBoxItem Content="2"/>
+                                        <ComboBoxItem Content="3"/>
+                                        <ComboBoxItem Content="4"/>
+                                        <ComboBoxItem Content="5"/>
+                                    </ComboBox>
+                                    <TextBlock Text="Count" FontSize="8" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Action buttons with white borders -->
+                            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="Clone" Width="50" Height="16" FontSize="8" Style="{StaticResource WhiteBorderButtonStyle}" Margin="0,0,3,0" ToolTip="Clone Object"/>
+                                <Button Content="IO" Width="50" Height="16" FontSize="8" Style="{StaticResource WhiteBorderButtonStyle}" Margin="0,0,3,0" ToolTip="Input/Output Settings"/>
+                                <Button Content="Apply" Width="50" Height="16" FontSize="8" Style="{StaticResource WhiteBorderButtonStyle}" ToolTip="Apply Changes"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Another divider -->
+                        <Rectangle Height="1" Fill="#555555" Margin="10,5"/>
+
+                        <!-- Corner radius controls -->
+                        <StackPanel Margin="3,0,3,-5">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                <CheckBox Width="8" Height="8" Background="Transparent" Foreground="White" Margin="0,0,3,0" ToolTip="Apply same radius to all corners"/>
+                                <TextBlock Text="All Corner Round" FontSize="8" Foreground="White"/>
+                            </StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0" Grid.Column="0" Margin="1">
+                                    <TextBox x:Name="TopLeftRadius" Width="40" Height="16" Text="0" FontSize="8"/>
+                                    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0">
+                                        <Button Style="{StaticResource UpButtonStyle}" Margin="0,0,0,2" Click="IncrementTopLeft_Click"/>
+                                        <Button Style="{StaticResource DownButtonStyle}" Click="DecrementTopLeft_Click"/>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="0" Grid.Column="1" Margin="1">
+                                    <TextBox x:Name="TopRightRadius" Width="40" Height="16" Text="0" FontSize="8"/>
+                                    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0">
+                                        <Button Style="{StaticResource UpButtonStyle}" Margin="0,0,0,2" Click="IncrementTopRight_Click"/>
+                                        <Button Style="{StaticResource DownButtonStyle}" Click="DecrementTopRight_Click"/>
+                                    </StackPanel>
+                                </Grid>
+                                <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Width="70" Height="35" Stroke="#555555" StrokeThickness="1" Fill="#222222" Margin="2,3,2,3"/>
+                                <Grid Grid.Row="2" Grid.Column="0" Margin="1">
+                                    <TextBox x:Name="BottomLeftRadius" Width="40" Height="16" Text="0" FontSize="8"/>
+                                    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0">
+                                        <Button Style="{StaticResource UpButtonStyle}" Margin="0,0,0,2" Click="IncrementBottomLeft_Click"/>
+                                        <Button Style="{StaticResource DownButtonStyle}" Click="DecrementBottomLeft_Click"/>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="2" Grid.Column="1" Margin="1">
+                                    <TextBox x:Name="BottomRightRadius" Width="40" Height="16" Text="0" FontSize="8"/>
+                                    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0">
+                                        <Button Style="{StaticResource UpButtonStyle}" Margin="0,0,0,2" Click="IncrementBottomRight_Click"/>
+                                        <Button Style="{StaticResource DownButtonStyle}" Click="DecrementBottomRight_Click"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!-- Bottom status bar with system info, shifted right to align under canvas -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Background="#222222" Margin="70,0,0,0">
+            <TextBlock Text="TEMPORARY AREA" FontSize="8" Foreground="White" Margin="5,0"/>
+            <TextBlock Text="[15:31:44 LASERNG]" FontSize="8" Foreground="White" Margin="5,0"/>
+            <TextBlock Text="IN 11111111111000 OUT 0000000000000000" FontSize="8" Foreground="White" Margin="5,0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

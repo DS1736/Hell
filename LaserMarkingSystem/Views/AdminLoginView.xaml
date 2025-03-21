@@ -1,0 +1,198 @@
+﻿<UserControl x:Class="InIWorkspace.Views.AdminLoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:InIWorkspace.UserControls"
+             xmlns:utils="clr-namespace:InIWorkspace.Utils"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:local1="clr-namespace:InIWorkspace"
+             xmlns:MaterialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"
+             UseLayoutRounding="True" SnapsToDevicePixels="True">
+
+    <UserControl.Resources>
+        <!-- Styles for input validation feedback -->
+        <Style x:Key="ValidInputStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="LightGreen"/>
+        </Style>
+        <Style x:Key="InvalidInputStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="LightCoral"/>
+        </Style>
+
+        <!-- Base style for inputs to remove borders and standardize appearance -->
+        <Style x:Key="InputControlStyle" TargetType="Control">
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Control">
+                        <Border Background="{TemplateBinding Background}">
+                            <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center" Padding="0"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Define RoundedBorderStyle since it was missing -->
+        <Style x:Key="RoundedBorderStyle" TargetType="Border">
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Border Background="#FFFFFF">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Background="#FFFFFF"/>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="200"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image Source="pack://application:,,,/Resources/Images/ApplicationLogo.png"
+                           Width="198" Height="53" Stretch="Fill"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,20,0,20">
+                    <TextBlock Text="Admin login with e-mail ID"
+                               FontSize="28" FontFamily="Inter, Segoe UI" Margin="10,0,0,0" FontWeight="Bold"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2" Margin="0,20,0,10">
+                    <TextBlock Text="User name" FontFamily="Inter, Segoe UI" FontSize="16" Margin="0,0,0,10"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource RoundedBorderStyle}" ClipToBounds="True" Width="450">
+                            <TextBox x:Name="txtUserName" Height="40" Width="450" Padding="40,0,0,0"
+                                     FontFamily="Inter, Segoe UI" FontSize="20" Foreground="Black"
+                                     Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                                     VerticalContentAlignment="Center">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox" BasedOn="{StaticResource InputControlStyle}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsValid}" Value="True">
+                                                <Setter Property="Background" Value="LightGreen"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsValid}" Value="False">
+                                                <Setter Property="Background" Value="LightCoral"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </Border>
+                        <Image Source="/Resources/Images/UserTextBox.png"
+                               Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center"
+                               Margin="10,0,0,0"/>
+                    </Grid>
+                    <TextBlock Text="{Binding UsernameError}" Foreground="Red" Margin="0,5,0,0" FontSize="14"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="3" Margin="0,10,0,20">
+                    <TextBlock Text="Password" FontFamily="Inter, Segoe UI" FontSize="16" Margin="0,0,0,10"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- PasswordBox Border -->
+                        <Border x:Name="passwordBoxBorder" Style="{StaticResource RoundedBorderStyle}" ClipToBounds="True" Width="450" Panel.ZIndex="0">
+                            <PasswordBox x:Name="txtPassword"
+                                         Height="40" Width="450" Padding="40,0,50,0"
+                                         FontFamily="Inter, Segoe UI" FontSize="20" CaretBrush="LightGray"
+                                         VerticalContentAlignment="Center" Foreground="Black"
+                                         Background="White"/>
+                        </Border>
+
+                        <!-- TextBox Border -->
+                        <Border x:Name="textBoxBorder" Style="{StaticResource RoundedBorderStyle}" ClipToBounds="True" Width="450" Panel.ZIndex="1" Visibility="Collapsed">
+                            <TextBox x:Name="txtPasswordVisible"
+                                     Height="40" Width="450" Padding="40,0,50,0"
+                                     FontFamily="Inter, Segoe UI" FontSize="20" CaretBrush="LightGray"
+                                     VerticalContentAlignment="Center" Foreground="Black"
+                                     Background="White"/>
+                        </Border>
+
+                        <!-- Toggle Button -->
+                        <Button x:Name="btnTogglePassword"
+                                Width="50" Height="50" Margin="399,0,10,0"
+                                HorizontalAlignment="Right" VerticalAlignment="Center"
+                                Click="TogglePasswordVisibility"
+                                Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Cursor="Hand"
+                                Panel.ZIndex="2">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Foreground" Value="#A9A9A9"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Foreground" Value="Black"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <MaterialDesign:PackIcon x:Name="eyeIcon"
+                                                     Kind="EyeOutline"
+                                                     Width="30" Height="30"
+                                                     Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"/>
+                        </Button>
+
+                        <!-- Lock Icon -->
+                        <Image Source="/Resources/Images/PasswordTextBox.png"
+                               Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center"
+                               Margin="15,0,0,0" IsHitTestVisible="False" Panel.ZIndex="3"/>
+                    </Grid>
+                    <TextBlock Text="{Binding PasswordError}" Foreground="Red" Margin="0,5,0,0" FontSize="14"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="4" Margin="0,20,0,20">
+                    <Button Command="{Binding LoginCommand}" Height="55" Width="445"
+                            Cursor="Hand" HorizontalAlignment="Center">
+                        <TextBlock Text="LOGIN" FontWeight="Bold" FontSize="16"/>
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="White"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="FontFamily" Value="Inter, Segoe UI"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Black"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border CornerRadius="4" BorderThickness="1"
+                                        BorderBrush="Black" Background="{TemplateBinding Background}">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>
